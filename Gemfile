@@ -1,6 +1,5 @@
 source "https://rubygems.org"
 
-# Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 8.0.2"
 
 gem "mysql2", "~> 0.5"
@@ -20,12 +19,10 @@ gem "devise_token_auth", "~> 1.2.5"
 gem "rack-cors", "~> 2.0.2"
 
 group :development, :test do
-  # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
-
-  # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
   gem "brakeman", require: false
-
-  # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+  gem "rspec-rails", "~> 4.0.1"
+  gem "factory_bot_rails", "~> 6.4.4"
+  gem "shoulda-matchers", "~> 4.0"
 end
