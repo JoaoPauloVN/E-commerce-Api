@@ -10,9 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_16_132324) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_16_133418) do
   create_table "categories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "system_requirements", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name"
+    t.string "operational_system"
+    t.string "storage"
+    t.string "processor"
+    t.string "memory"
+    t.string "video_board"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
