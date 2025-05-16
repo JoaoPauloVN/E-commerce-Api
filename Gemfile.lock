@@ -113,6 +113,8 @@ GEM
     factory_bot_rails (6.4.4)
       factory_bot (~> 6.5)
       railties (>= 5.0.0)
+    faker (3.5.1)
+      i18n (>= 1.8.11, < 2)
     fugit (1.11.1)
       et-orbi (~> 1, >= 1.2.11)
       raabro (~> 1.4)
@@ -337,11 +339,13 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  activerecord
   bootsnap
   brakeman
   debug
   devise_token_auth (~> 1.2.5)
   factory_bot_rails (~> 6.4.4)
+  faker
   kamal
   mysql2 (~> 0.5)
   puma (>= 5.0)

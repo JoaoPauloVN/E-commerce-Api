@@ -11,6 +11,7 @@ gem "solid_cable"
 gem "bootsnap", require: false
 gem "kamal", require: false
 gem "thruster", require: false
+gem 'activerecord'
 
 # Auth
 gem "devise_token_auth", "~> 1.2.5"
@@ -25,4 +26,5 @@ group :development, :test do
   gem "rspec-rails", "~> 8.0.0"
   gem "factory_bot_rails", "~> 6.4.4"
   gem "shoulda-matchers", "~> 5.3.0"
+  gem "faker"
 end
