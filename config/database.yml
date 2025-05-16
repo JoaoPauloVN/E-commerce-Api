@@ -8,27 +8,27 @@ default: &default
 
 development:
   <<: *default
-  database: e_commerce_api3_development
+  database: e_commerce_api_development
 
 test:
   <<: *default
-  database: e_commerce_api3_test
+  database: e_commerce_api_test
 
 production:
   primary: &primary_production
     <<: *default
-    database: e_commerce_api3_production
-    username: e_commerce_api3
-    password: <%= ENV["E_COMMERCE_API3_DATABASE_PASSWORD"] %>
+    database: e_commerce_api_production
+    username: e_commerce_api
+    password: <%= ENV["E_COMMERCE_API_DATABASE_PASSWORD"] %>
   cache:
     <<: *primary_production
-    database: e_commerce_api3_production_cache
+    database: e_commerce_api_production_cache
     migrations_paths: db/cache_migrate
   queue:
     <<: *primary_production
-    database: e_commerce_api3_production_queue
+    database: e_commerce_api_production_queue
     migrations_paths: db/queue_migrate
   cable:
     <<: *primary_production
-    database: e_commerce_api3_production_cable
+    database: e_commerce_api_production_cable
     migrations_paths: db/cable_migrate
