@@ -5,11 +5,13 @@ class Admin::V1::CategoriesController < Admin::V1::ApiController
 
   def create
     @category = Category.new(category_params)
-    @category.save!
+    save_category(:created)
+  end
 
-    render :show, status: :created
-  rescue ActiveRecord::RecordInvalid
-    render_errors(fields: @category.errors.messages)
+  def update
+    @category = Category.find(params[:id])
+    @category.attributes = category_params
+    save_category(:ok)
   end
 
   private
@@ -17,4 +19,12 @@ class Admin::V1::CategoriesController < Admin::V1::ApiController
   def category_params
     params.require(:category).permit(:name)
   end 
+
+  def save_category(status)
+    @category.save!
+
+    render :show, status: status
+  rescue ActiveRecord::RecordInvalid
+    render_errors(fields: @category.errors.messages)
+  end
 end

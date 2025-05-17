@@ -24,7 +24,9 @@ RSpec.describe "Admin::V1::Categories", type: :request do
     let(:url) { "/admin/v1/categories" }
 
     context "with valid params" do
-      let(:category_params) { { category: attributes_for(:category) }.to_json }
+      let(:category_params) {
+        { category: attributes_for(:category) }.to_json
+      }
 
       it "adds a new category" do
         expect do 
@@ -47,7 +49,9 @@ RSpec.describe "Admin::V1::Categories", type: :request do
     end
     
     context "with invalid params" do
-      let(:invalid_category_params) { { category: attributes_for(:category, name: nil) }.to_json }
+      let(:invalid_category_params) {
+        { category: attributes_for(:category, name: nil) }.to_json
+      }
 
       it "adds a new category" do
         expect do 
@@ -63,6 +67,61 @@ RSpec.describe "Admin::V1::Categories", type: :request do
 
       it "return error message" do
         post url, headers: auth_header(user: user), params:invalid_category_params
+
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+    end
+  end
+
+  context "PATCH /categories" do
+    let(:category) { create(:category) }
+    let(:url) { "/admin/v1/categories/#{category.id}" }
+
+    context "with valid params" do
+      let(:new_name) { "New Name" }
+      let(:category_params) {
+        { category: attributes_for(:category, name: new_name) }.to_json
+      }
+
+      it "updates category" do
+        patch url, headers: auth_header(user: user), params: category_params
+        expect(category.reload.name).to eq new_name
+      end
+
+      it "returns updated category" do
+        patch url, headers: auth_header(user: user), params: category_params
+        expected_category = category.reload.as_json(only: %i(id name))
+        expect(body_json["category"]).to eq expected_category
+      end
+
+      it "returns status ok" do
+        patch url, headers: auth_header(user: user), params: category_params
+
+        expect(response).to have_http_status(:ok)
+      end
+    end
+    
+    context "with invalid params" do
+      let(:invalid_category_params) {
+        { category: attributes_for(:category, name: nil) }.to_json
+      }
+
+      it "doesn't updates category" do
+        old_name = category.name
+        patch url, headers: auth_header(user: user), params: invalid_category_params
+        category.reload
+
+        expect(category.name).to eq old_name
+      end
+
+      it "return error messages" do
+        patch url, headers: auth_header(user: user), params: invalid_category_params
+
+        expect(body_json["errors"]["fields"]).to have_key("name")
+      end
+
+      it "return error message" do
+        patch url, headers: auth_header(user: user), params: invalid_category_params
 
         expect(response).to have_http_status(:unprocessable_entity)
       end
