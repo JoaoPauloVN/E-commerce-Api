@@ -14,6 +14,7 @@ gem "thruster", require: false
 gem 'activerecord'
 
 # Auth
+gem "devise", "~> 4.9.4"
 gem "devise_token_auth", "~> 1.2.5"
 
 # Rendering
