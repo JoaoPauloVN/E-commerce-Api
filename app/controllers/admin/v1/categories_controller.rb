@@ -1,4 +1,6 @@
 class Admin::V1::CategoriesController < Admin::V1::ApiController
+  before_action :load_category, only: [:update, :destroy]
+
   def index
     @categories = Category.all
   end
@@ -9,9 +11,15 @@ class Admin::V1::CategoriesController < Admin::V1::ApiController
   end
 
   def update
-    @category = Category.find(params[:id])
     @category.attributes = category_params
     save_category(:ok)
+  end
+
+  def destroy
+    @category.destroy!
+    head :no_content
+  rescue ActiveRecord::RecordNotDestroyed
+    render_errors(fields: @category.errors.messages)
   end
 
   private
@@ -26,5 +34,9 @@ class Admin::V1::CategoriesController < Admin::V1::ApiController
     render :show, status: status
   rescue ActiveRecord::RecordInvalid
     render_errors(fields: @category.errors.messages)
+  end
+
+  def load_category
+    @category = Category.find(params[:id])
   end
 end

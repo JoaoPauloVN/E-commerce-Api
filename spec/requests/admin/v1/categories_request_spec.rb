@@ -127,4 +127,32 @@ RSpec.describe "Admin::V1::Categories", type: :request do
       end
     end
   end
+
+  context "DELETE /categories" do
+    let!(:category) { create(:category) }
+    let(:url) { "/admin/v1/categories/#{category.id}" }
+
+    it "delete category" do
+      expect do
+        delete url, headers: auth_header(user: user)
+      end.to change(Category, :count).by(-1)
+    end
+
+    it "returns no content status" do
+      delete url, headers: auth_header(user: user)
+      expect(response).to have_http_status(:no_content)
+    end
+
+    it "doesn't return any body content" do
+      delete url, headers: auth_header(user: user)
+      expect(body_json).to_not be_present
+    end
+
+    it "doesn't return any body content" do
+      product_categories = create_list(:product_category, 3, category: category)
+      delete url, headers: auth_header(user: user)
+      expect_product_categories = ProductCategory.where(id: product_categories.map(&:id))
+      expect(expect_product_categories).to eq []
+    end
+  end
 end
