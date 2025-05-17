@@ -16,6 +16,9 @@ gem 'activerecord'
 # Auth
 gem "devise_token_auth", "~> 1.2.5"
 
+# Rendering
+gem "jbuilder", "~> 2.13.0"
+
 # Cors
 gem "rack-cors", "~> 2.0.2"
 

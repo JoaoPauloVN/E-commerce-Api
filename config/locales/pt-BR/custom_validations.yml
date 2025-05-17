@@ -3,3 +3,4 @@ pt-BR:
     errors:
       messages:
         future_date: "deve ser uma data no futuro"
+        request_message_error: "Erro no processamento da requisição."
