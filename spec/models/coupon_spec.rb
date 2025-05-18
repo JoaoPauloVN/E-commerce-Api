@@ -24,4 +24,6 @@ RSpec.describe Coupon, type: :model do
     subject.valid?
     expect(subject.errors).not_to have_key(:due_date)
   end
+
+  it_behaves_like "pagination_concern", :coupon
 end

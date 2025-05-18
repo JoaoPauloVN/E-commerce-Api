@@ -7,12 +7,12 @@ class Admin::V1::CategoriesController < Admin::V1::ApiController
 
   def create
     @category = Category.new(category_params)
-    save_category(:created)
+    save(:created)
   end
 
   def update
     @category.attributes = category_params
-    save_category(:ok)
+    save()
   end
 
   def destroy
@@ -28,7 +28,7 @@ class Admin::V1::CategoriesController < Admin::V1::ApiController
     params.require(:category).permit(:name)
   end 
 
-  def save_category(status)
+  def save(status = :ok)
     @category.save!
 
     render :show, status: status
